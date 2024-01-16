@@ -1,36 +1,33 @@
-import Modal from '@/components/ui/Modal';
-import LetterForm from '@/components/letter/LetterForm'
+import CharacterPlace from '@/components/letter/CharacterPlace';
 import React, { useState } from 'react';
-import { createPortal } from 'react-dom';
 import './App.css';
-import imgcharicter from '@/constants/image/icons-human.png';
 
 function App() {
-  const [isOpen, open] = useState(false);
-  const openModal = () => open(true);
-  const closeModal = () => open(false);
+  const [letters, setLetters] = useState(false);
+  const addLetterHandler = ({ title, summary, from }) => {
+    const newLetter = {
+      id: self.crypto.randomUUID(),
+      title,
+      summary,
+      from
+    };
+
+    const updateLetter = [...letters, newLetter];
+    setLetters(updateLetter);
+  }
+
   return (
     <div className='App'>
       <header>
         <title>Space Project</title>
       </header>
       <section>
-        <button onClick={openModal}>
-          <img src={imgcharicter} alt="캐릭터 픽셀 그림" />
-        </button>
-        {isOpen && createPortal(
-          <Modal onClose={closeModal}>
-            <LetterForm onClose={closeModal}></LetterForm>
-          </Modal>,
-          document.body)}
+        <letterPlace letters={letters}>
+          <CharacterPlace onAdd={addLetterHandler} />
+          {/* <FriendPlace /> */}
+        </letterPlace>
       </section>
-    </div>
-
-    // <section>
-    //   <LetterPlace />
-    //   <CharacterPlace />
-    //   <FriendPlace/>
-    // </section>
+    </div >
   )
 }
 

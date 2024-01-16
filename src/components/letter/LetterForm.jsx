@@ -1,20 +1,15 @@
 import { enteredLetterFormIsNotEmpty } from '@/utils/utils';
 import React, { useEffect, useState } from 'react';
 
-const LetterForm = ({ onClose, children, todo }) => {
+const LetterForm = ({ onAdd , onClose }) => {
 
     const [title, setTitle] = useState('');
     const [summary, setSummary] = useState('');
     const [from, setFrom] = useState('');
     const [isFormInvalid, setInvalid] = useState(true);
 
-    const addOrUpdateTodoHandler = () => {
-        if (isNewTodoForm(children)) {
-            dispatch({ type: 'ADD', newTodo: { id: self.crypto.randomUUID(), title, summary, from } });
-        } else {
-            dispatch({ type: 'UPDATE', updateTodo: { id: todo.id, title, summary, from } });
-        }
-
+    const addLetterHandler = () => {
+        onAdd({ title, summary, from });
         onClose();
     }
 
@@ -48,7 +43,7 @@ const LetterForm = ({ onClose, children, todo }) => {
 
                 <div className='flex justify-end gap-4'>
                     <button className='text-xl text-white' type='button' onClick={onClose}>Cancel</button>
-                    <button className='px-6 py-3 text-xl text-red-200' type='button' onClick={addOrUpdateTodoHandler} disabled={isFormInvalid}>
+                    <button className='px-6 py-3 text-xl text-red-200' type='button' onClick={addLetterHandler} disabled={isFormInvalid}>
                         Send
                     </button>
                 </div>
